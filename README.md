@@ -6,3 +6,4 @@ A Repository for building out CSCE 3513 group project.
 - Carson Jefferies
 - Spencer Loper
 - Alec Anderson
+- Justin Austin
