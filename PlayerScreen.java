@@ -23,58 +23,33 @@ public class PlayerScreen extends JPanel{
         this.top.add(title, BorderLayout.PAGE_START);
 
         //RedTeam
-        JLabel redTeamText = new JLabel("Red Team");
-        redTeamText.setPreferredSize(new Dimension(640, 20));
-        redTeamText.setFont(new Font("Serif", Font.BOLD, 24));
-        redTeamText.setForeground(Color.RED);
-        redTeamText.setHorizontalAlignment(JLabel.CENTER);
-        this.top.add(redTeamText, BorderLayout.LINE_START);
+        JLabel redTeam = new JLabel("Red Team");
+        redTeam.setPreferredSize(new Dimension(640, 20));
+        redTeam.setFont(new Font("Serif", Font.BOLD, 24));
+        redTeam.setForeground(Color.RED);
+        redTeam.setHorizontalAlignment(JLabel.CENTER);
+        this.top.add(redTeam, BorderLayout.LINE_START);
 
         //BlueTeam
-        JLabel blueTeamText = new JLabel("Blue Team");
-        blueTeamText.setPreferredSize(new Dimension(640, 20));
-        blueTeamText.setFont(new Font("Serif", Font.BOLD, 24));
-        blueTeamText.setForeground(Color.BLUE);
-        blueTeamText.setHorizontalAlignment(JLabel.CENTER);
-        this.top.add(blueTeamText, BorderLayout.LINE_END);
+        JLabel blueTeam = new JLabel("Blue Team");
+        blueTeam.setPreferredSize(new Dimension(640, 20));
+        blueTeam.setFont(new Font("Serif", Font.BOLD, 24));
+        blueTeam.setForeground(Color.BLUE);
+        blueTeam.setHorizontalAlignment(JLabel.CENTER);
+        this.top.add(blueTeam, BorderLayout.LINE_END);
 
         //Create Table of textboxes
-        this.table = new JPanel(new GridLayout(0,6, 1, 1));
-        for(int i = 0; i < 15; i++){
-            JLabel redLabels = new JLabel("PLAYER " + (i+1));
-            redLabels.setHorizontalAlignment(JTextField.CENTER);
-            redLabels.setFont(new Font("Serif", Font.BOLD, 16));
-            this.table.add(redLabels);
-
-            JTextField redIDInput = new JTextField();
-            redIDInput.setHorizontalAlignment(JTextField.CENTER);
-            redIDInput.setFont(new Font("Serif", Font.BOLD, 16));
-            this.table.add(redIDInput);
-
-            JTextField redCodeName = new JTextField();
-            redCodeName.setHorizontalAlignment(JTextField.CENTER);
-            redCodeName.setFont(new Font("Serif", Font.BOLD, 16));
-            this.table.add(redCodeName);
-
-            JLabel blueLabels = new JLabel("PLAYER " + (i+1));
-            blueLabels.setHorizontalAlignment(JTextField.CENTER);
-            blueLabels.setFont(new Font("Serif", Font.BOLD, 16));
-            this.table.add(blueLabels);
-
-            JTextField blueIDInput = new JTextField();
-            blueIDInput.setHorizontalAlignment(JTextField.CENTER);
-            blueIDInput.setFont(new Font("Serif", Font.BOLD, 16));
-            this.table.add(blueIDInput);
-
-            JTextField blueCodeName = new JTextField();
-            blueCodeName.setHorizontalAlignment(JTextField.CENTER);
-            blueCodeName.setFont(new Font("Serif", Font.BOLD, 16));
-            this.table.add(blueCodeName);
+        this.table = new JPanel(new GridLayout(0,2));
+        for(int i = 0; i < 20; i++){
+            JTextField tmp = new JTextField();
+            tmp.setHorizontalAlignment(JTextField.CENTER);
+            tmp.setFont(new Font("Serif", Font.BOLD, 16));
+            this.table.add(tmp);
         }
 
         //Add Components to JPanel
         this.add(this.top, BorderLayout.PAGE_START);
         this.add(this.table, BorderLayout.CENTER);
-        
+
     }
 }
