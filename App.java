@@ -2,14 +2,25 @@
 
 //Main method
 public class App{
+    //Class Variables
+    Model model;
+    Controller controller;
+    View view;
+
     //Constructor 
     public App(){
-        Model model = new Model();
-        Controller controller = new Controller(model);
-        View view = new View(model, controller);
+        this.model = new Model();
+        this.controller = new Controller(model);
+        this.view = new View(model, controller);
+    }
+
+    //Launch Method
+    public void launch(){
+        view.launch();
     }
     public static void main(String args[]){
         App app = new App();
+        app.launch();
     }
 
 }
