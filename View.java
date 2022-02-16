@@ -40,7 +40,7 @@ public class View{
     public void launch(){
         this.showSplat();
         try {
-            Thread.sleep(3000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             System.out.println("Could not Sleep!");
             e.printStackTrace();
