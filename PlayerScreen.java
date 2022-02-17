@@ -24,27 +24,28 @@ public class PlayerScreen extends JPanel{
 
         //RedTeam
         JLabel redTeamText = new JLabel("Red Team");
-        redTeamText.setPreferredSize(new Dimension(640, 20));
+        redTeamText.setPreferredSize(new Dimension(480, 20));
         redTeamText.setFont(new Font("Serif", Font.BOLD, 24));
         redTeamText.setForeground(Color.RED);
-        redTeamText.setHorizontalAlignment(JLabel.CENTER);
+        redTeamText.setHorizontalAlignment(JLabel.RIGHT);
         this.top.add(redTeamText, BorderLayout.LINE_START);
+        
 
         //BlueTeam
         JLabel blueTeamText = new JLabel("Blue Team");
-        blueTeamText.setPreferredSize(new Dimension(640, 20));
+        blueTeamText.setPreferredSize(new Dimension(270, 20));
         blueTeamText.setFont(new Font("Serif", Font.BOLD, 24));
         blueTeamText.setForeground(Color.BLUE);
-        blueTeamText.setHorizontalAlignment(JLabel.CENTER);
+        blueTeamText.setHorizontalAlignment(JLabel.LEFT);
         this.top.add(blueTeamText, BorderLayout.LINE_END);
 
         //Create Table of textboxes
         this.table = new JPanel(new GridLayout(0,6, 1, 1));
         for(int i = 0; i < 15; i++){
-            JLabel redLabels = new JLabel("PLAYER " + (i+1));
-            redLabels.setHorizontalAlignment(JTextField.CENTER);
-            redLabels.setFont(new Font("Serif", Font.BOLD, 16));
-            this.table.add(redLabels);
+            JLabel Labels = new JLabel("PLAYER " + (i+1));
+            Labels.setHorizontalAlignment(JTextField.CENTER);
+            Labels.setFont(new Font("Serif", Font.BOLD, 16));
+            this.table.add(Labels);
 
             JTextField redIDInput = new JTextField();
             redIDInput.setHorizontalAlignment(JTextField.CENTER);
@@ -56,10 +57,8 @@ public class PlayerScreen extends JPanel{
             redCodeName.setFont(new Font("Serif", Font.BOLD, 16));
             this.table.add(redCodeName);
 
-            JLabel blueLabels = new JLabel("PLAYER " + (i+1));
-            blueLabels.setHorizontalAlignment(JTextField.CENTER);
-            blueLabels.setFont(new Font("Serif", Font.BOLD, 16));
-            this.table.add(blueLabels);
+            JLabel space = new JLabel();
+            this.table.add(space);
 
             JTextField blueIDInput = new JTextField();
             blueIDInput.setHorizontalAlignment(JTextField.CENTER);
