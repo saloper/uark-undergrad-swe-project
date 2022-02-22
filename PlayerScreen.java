@@ -31,13 +31,13 @@ public class PlayerScreen extends JPanel{
         this.top.add(redTeamText, BorderLayout.LINE_START);
         
 
-        //BlueTeam
-        JLabel blueTeamText = new JLabel("Blue Team");
-        blueTeamText.setPreferredSize(new Dimension(270, 20));
-        blueTeamText.setFont(new Font("Serif", Font.BOLD, 24));
-        blueTeamText.setForeground(Color.BLUE);
-        blueTeamText.setHorizontalAlignment(JLabel.LEFT);
-        this.top.add(blueTeamText, BorderLayout.LINE_END);
+        //GreenTeam
+        JLabel greenTeamText = new JLabel("Green Team");
+        greenTeamText.setPreferredSize(new Dimension(270, 20));
+        greenTeamText.setFont(new Font("Serif", Font.BOLD, 24));
+        greenTeamText.setForeground(Color.GREEN);
+        greenTeamText.setHorizontalAlignment(JLabel.LEFT);
+        this.top.add(greenTeamText, BorderLayout.LINE_END);
 
         //Create Table of textboxes
         this.table = new JPanel(new GridLayout(0,6, 1, 1));
