@@ -9,7 +9,9 @@ public class PlayerScreen extends JPanel{
     //Class Variables
     JPanel table;
     JPanel top;
-    public PlayerScreen(){
+    Database DB;
+    public PlayerScreen(Database DB){
+        this.DB = DB;
         //Set The Layout
         this.setLayout(new BorderLayout(0, 20));
 

@@ -4,18 +4,15 @@ import java.awt.*;
 
 public class View{
     //Class Variables
-    Model model;
-    Controller controller;
     JFrame frame; //Main Frame
     CardLayout root; //Holds the Jpanels
     JPanel container; //Holds the root
+    Database DB;
 
 
     //Constructor
-    public View(Model m, Controller controller){
-        //Glue together model and Controller
-        this.model = m;
-        this.controller = controller;
+    public View(Database DB){
+        this.DB = DB;
         //Create Card Layouts and Jpanels
         this.frame = new JFrame();
         this.root = new CardLayout();
@@ -25,7 +22,7 @@ public class View{
         this.container.setLayout(this.root);
         this.container.setPreferredSize(new Dimension(1280,720));
         this.container.add(new SplatScreen(), "Splat"); //Add a Splat Screen
-        this.container.add(new PlayerScreen(), "Player"); //Add a player Screen
+        this.container.add(new PlayerScreen(this.DB), "Player"); //Add a player Screen
 
         //Add to  Everything to a frame
         this.frame.add(this.container);

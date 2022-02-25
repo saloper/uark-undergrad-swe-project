@@ -14,7 +14,7 @@ public class SplatScreen extends JPanel{
         this.setLayout(new BorderLayout());
         //Add Image
         try {
-            BufferedImage logo = ImageIO.read(new File("splat.jpg"));
+            BufferedImage logo = ImageIO.read(new File("resources/splat.jpg"));
             JLabel logoLabel = new JLabel(new ImageIcon(logo));
             this.add(logoLabel, BorderLayout.CENTER);
         } catch (IOException e) {
