@@ -2,7 +2,7 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class View{
+public class View {
     //Class Variables
     JFrame frame; //Main Frame
     CardLayout root; //Holds the Jpanels
@@ -23,6 +23,7 @@ public class View{
         this.container.setPreferredSize(new Dimension(1280,720));
         this.container.add(new SplatScreen(), "Splat"); //Add a Splat Screen
         this.container.add(new PlayerScreen(this.DB), "Player"); //Add a player Screen
+        this.container.add(new PlayerScreen(this.DB), "ActionScreen"); //Add a action screen
 
         //Add to  Everything to a frame
         this.frame.add(this.container);
@@ -56,5 +57,14 @@ public class View{
     public void showPlayer(){
         root.show(container, "Player");
         this.frame.setVisible(true);
+    }
+
+    public void showActionScreen(){
+        root.show(container, "ActionScreen");
+        this.frame.setVisible(true);
+    }
+
+    public void startGame(){
+
     }
 }
