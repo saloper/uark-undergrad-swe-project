@@ -1,13 +1,16 @@
 //View File CSCE 3513 Team 6 Project
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyListener;
+import java.awt.event.KeyEvent;
 
-public class View {
+public class View implements KeyListener{
     //Class Variables
     JFrame frame; //Main Frame
     CardLayout root; //Holds the Jpanels
     JPanel container; //Holds the root
     Database DB;
+    Boolean gameStarted;
 
 
     //Constructor
@@ -31,6 +34,8 @@ public class View {
         this.frame.pack();
         this.frame.setResizable(false);
         this.frame.setVisible(false); //Show a Frame
+
+        this.gameStarted = false; // game does not start by default
 
     }
 
@@ -64,7 +69,21 @@ public class View {
         this.frame.setVisible(true);
     }
 
-    public void startGame(){
-
+    public void showStartGame(){
+        this.showActionScreen();
     }
+
+    // when key is pressed and release, turn the gameStarted bool to true and switch to showStartGame view
+    public void keyReleased(KeyEvent e) {
+        if(e.getKeyCode() == KeyEvent.VK_F5) {
+            if (!this.gameStarted) {
+                this.gameStarted = true;
+                this.showStartGame();
+            }
+        }
+    }
+
+    // unused, but required to satisfy interface KeyListener
+    public void keyTyped(KeyEvent e) {}
+    public void keyPressed(KeyEvent e) {}
 }
