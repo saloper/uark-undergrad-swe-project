@@ -65,6 +65,6 @@ public class View {
     }
 
     public void startGame(){
-
+        this.showActionScreen();
     }
 }
