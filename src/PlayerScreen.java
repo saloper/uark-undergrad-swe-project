@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 //Class to hold the Splat Screen
 //This class is a Jpanel the consists of two seperate Panels
@@ -9,7 +11,9 @@ public class PlayerScreen extends JPanel{
     //Class Variables
     JPanel table;
     JPanel top;
-    public PlayerScreen(){
+    Database DB;
+    public PlayerScreen(Database DB){
+        this.DB = DB;
         //Set The Layout
         this.setLayout(new BorderLayout(0, 20));
 
@@ -50,25 +54,33 @@ public class PlayerScreen extends JPanel{
             JTextField redIDInput = new JTextField();
             redIDInput.setHorizontalAlignment(JTextField.CENTER);
             redIDInput.setFont(new Font("Serif", Font.BOLD, 16));
+            redIDInput.putClientProperty("index", i + 1);
+            redIDInput.addActionListener(inputAction);
             this.table.add(redIDInput);
 
             JTextField redCodeName = new JTextField();
             redCodeName.setHorizontalAlignment(JTextField.CENTER);
             redCodeName.setFont(new Font("Serif", Font.BOLD, 16));
+            redCodeName.putClientProperty("index", i + 1);
+            redCodeName.addActionListener(inputAction);
             this.table.add(redCodeName);
 
             JLabel space = new JLabel();
             this.table.add(space);
 
-            JTextField blueIDInput = new JTextField();
-            blueIDInput.setHorizontalAlignment(JTextField.CENTER);
-            blueIDInput.setFont(new Font("Serif", Font.BOLD, 16));
-            this.table.add(blueIDInput);
+            JTextField greenIDInput = new JTextField();
+            greenIDInput.setHorizontalAlignment(JTextField.CENTER);
+            greenIDInput.setFont(new Font("Serif", Font.BOLD, 16));
+            greenIDInput.putClientProperty("index", i + 16);
+            greenIDInput.addActionListener(inputAction);
+            this.table.add(greenIDInput);
 
-            JTextField blueCodeName = new JTextField();
-            blueCodeName.setHorizontalAlignment(JTextField.CENTER);
-            blueCodeName.setFont(new Font("Serif", Font.BOLD, 16));
-            this.table.add(blueCodeName);
+            JTextField greenCodeName = new JTextField();
+            greenCodeName.setHorizontalAlignment(JTextField.CENTER);
+            greenCodeName.setFont(new Font("Serif", Font.BOLD, 16));
+            greenCodeName.putClientProperty("index", i + 16);
+            greenCodeName.addActionListener(inputAction);
+            this.table.add(greenCodeName);
         }
 
         //Add Components to JPanel
@@ -76,4 +88,14 @@ public class PlayerScreen extends JPanel{
         this.add(this.table, BorderLayout.CENTER);
         
     }
+
+    ActionListener inputAction = new ActionListener(){
+        public void actionPerformed(ActionEvent e){
+            var textBox = (JTextField)e.getSource();
+            System.out.println(textBox.getText() + " from player " + textBox.getClientProperty("index"));
+        }
+    };
+    // This is called when you enter text into a player field and press enter. It returns the text inside the field plus an index client property to discern which input box
+    // the message came from. getSource returns the object which invoked the inputAction event then casts it into a JTextField and calls its methods in order to get the data needed.
+    // The "index" client property represents red players from 1-15, and green players from 16-30. This can be moved to another class later if needed.
 }

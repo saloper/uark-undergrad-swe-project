@@ -1,28 +1,18 @@
-# CSCE3513-Project
-A Repository for building out CSCE 3513 group project.
+## Getting Started
 
-#Sprint 2 Work by Spencer Loper
+Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
 
-## Members
-- Cameron Wilson
-- Carson Jefferies
-- Spencer Loper
-- Alec Anderson
-- Justin Avery Austin
+## Folder Structure
 
+The workspace contains two folders by default, where:
 
-### Sprint 2 Checklist
+- `src`: the folder to maintain sources
+- `lib`: the folder to maintain dependencies
 
-- [x] Set up database on Heroku
-- [x] Create git repositories for your team
+Meanwhile, the compiled output files will be generated in the `bin` folder by default.
 
-- [x] Create splash screen
-- [ ] Create player entry screen
-- [ ] Link database to application, add two players via application
-- [ ] Continue to make status reports every Thursday in Slack
+> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
 
-- [ ] Make at least one task assignment in Trello for each team member
+## Dependency Management
 
-- [ ] Fill out and submit last part of attached document for the team (only one member needs to submit)
-
-- [ ] Each team member is to make at least one commit to github for this sprint
+The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
