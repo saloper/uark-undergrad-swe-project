@@ -8,10 +8,10 @@ public class Database {
 
     public Database() throws ClassNotFoundException{
         Class.forName("org.postgresql.Driver");
-        final String URL = "jdbc:postgresql://ec2-3-227-195-74.compute-1.amazonaws.com:5432/dcipgblk6rrdcr";
+        final String URL = "jdbc:postgresql://ec2-3-209-61-239.compute-1.amazonaws.com:5432/d89f0meqop9uuh";
         Properties props = new Properties();
-        props.setProperty("user", "bxtjkbtexkvngp");
-        props.setProperty("password", "e706d0d5e3a54649823fc52a43efb8e6e3abf611ce0b979eb4b825f6c12ef16f");
+        props.setProperty("user", "fvsijkxxrevzgi");
+        props.setProperty("password", "3fde3041a3662e090f8706bb853ef2fb2bfb1e8f8bc03f870c3d06493b89a44e");
         try {
             connection = DriverManager.getConnection(URL, props);
             System.out.println("Connected to Database!");
