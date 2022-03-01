@@ -4,13 +4,11 @@
 public class App{
     View view;
     Database DB;
-    Boolean gameStarted;
-    
+
     //Constructor 
     public App() throws ClassNotFoundException{
         this.DB = new Database();
         this.view = new View(this.DB);
-        this.gameStarted = false;
     }
 
     //Launch Method
