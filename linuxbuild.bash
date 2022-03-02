@@ -1,6 +1,4 @@
-cd bin
-rm *.class
-cd ..
+rm -f bin/*.class
 javac src/*.java -d bin/
 cd bin
-java App
+java -cp "../lib/postgresql-42.3.3.jar:." App
