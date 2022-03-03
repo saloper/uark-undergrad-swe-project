@@ -1,10 +1,10 @@
 //View File CSCE 3513 Team 6 Project
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
+import java.awt.KeyboardFocusManager;
 
-public class View implements KeyListener{
+public class View implements KeyEventDispatcher{
     //Class Variables
     JFrame frame; //Main Frame
     CardLayout root; //Holds the Jpanels
@@ -20,13 +20,17 @@ public class View implements KeyListener{
         this.frame = new JFrame();
         this.root = new CardLayout();
         this.container = new JPanel();
-    
+
+        //Add Key Manage
+        KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+        manager.addKeyEventDispatcher(this);
+
         //Add Panels to Card Layout
         this.container.setLayout(this.root);
         this.container.setPreferredSize(new Dimension(1280,720));
         this.container.add(new SplatScreen(), "Splat"); //Add a Splat Screen
         this.container.add(new PlayerScreen(this.DB), "Player"); //Add a player Screen
-        this.container.add(new PlayerScreen(this.DB), "ActionScreen"); //Add a action screen
+        this.container.add(new ActionScreen(this.DB), "ActionScreen"); //Add a action screen
 
         //Add to  Everything to a frame
         this.frame.add(this.container);
@@ -73,17 +77,15 @@ public class View implements KeyListener{
         this.showActionScreen();
     }
 
-    // when key is pressed and release, turn the gameStarted bool to true and switch to showStartGame view
-    public void keyReleased(KeyEvent e) {
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent e) {
         if(e.getKeyCode() == KeyEvent.VK_F5) {
             if (!this.gameStarted) {
                 this.gameStarted = true;
                 this.showStartGame();
             }
         }
+        return false;
     }
 
-    // unused, but required to satisfy interface KeyListener
-    public void keyTyped(KeyEvent e) {}
-    public void keyPressed(KeyEvent e) {}
 }
