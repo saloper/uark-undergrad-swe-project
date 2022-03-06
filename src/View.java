@@ -8,6 +8,7 @@ public class View{
     CardLayout root; //Holds the Jpanels
     JPanel container; //Holds the root
     Database DB;
+    public static Dimension windowSize;
 
 
     //Constructor
@@ -17,12 +18,14 @@ public class View{
         this.frame = new JFrame();
         this.root = new CardLayout();
         this.container = new JPanel();
+        windowSize = new Dimension(1280, 720);
     
         //Add Panels to Card Layout
         this.container.setLayout(this.root);
-        this.container.setPreferredSize(new Dimension(1280,720));
+        this.container.setPreferredSize(windowSize);
         this.container.add(new SplatScreen(), "Splat"); //Add a Splat Screen
         this.container.add(new PlayerScreen(this.DB), "Player"); //Add a player Screen
+        this.container.add(new ActionScreen(), "Action"); // Add an action screen
 
         //Add to  Everything to a frame
         this.frame.add(this.container);
@@ -37,12 +40,13 @@ public class View{
     public void launch(){
         this.showSplat();
         try {
-            Thread.sleep(3000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             System.out.println("Could not Sleep!");
             e.printStackTrace();
         }
-        this.showPlayer();
+        //this.showPlayer();
+        this.showActionScreen();
     }
 
     //Method to show the Splat Panel
@@ -55,6 +59,11 @@ public class View{
     //Method to Show the Player View
     public void showPlayer(){
         root.show(container, "Player");
+        this.frame.setVisible(true);
+    }
+
+    public void showActionScreen(){
+        root.show(container, "Action");
         this.frame.setVisible(true);
     }
 }
