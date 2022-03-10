@@ -135,11 +135,19 @@ public class PlayerScreen extends JPanel{
                 int ID = Integer.valueOf(redIDField[i].getText());
                 String codeName = redNameField[i].getText();
                 this.DB.players.add(new Player(codeName,ID, true));
+                //If not in the DB add it to the DB
+                if(this.DB.getCodename(ID) == null){
+                    this.DB.addPlayer(ID, codeName);
+                }
             }
             if(!greenIDField[i].getText().isBlank() && !greenNameField[i].getText().isBlank()){
                 int ID = Integer.valueOf(greenIDField[i].getText());
                 String codeName = greenNameField[i].getText();
                 this.DB.players.add(new Player(codeName,ID, false));
+                //If not in the DB add it to the DB
+                if(this.DB.getCodename(ID) == null){
+                    this.DB.addPlayer(ID, codeName);
+                }
             }
         }
     }

@@ -18,8 +18,6 @@ public class App{
     public static void main(String args[]) throws ClassNotFoundException{
         App app = new App();
         app.launch();
-        System.out.println("Getting Player 3: " + app.DB.getCodename(3));
-        System.out.println("Getting Player 4: " + app.DB.getCodename(4));
     }
 
 }
