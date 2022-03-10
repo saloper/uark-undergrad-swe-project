@@ -16,6 +16,7 @@ public class ActionScreen extends JPanel {
 
     public ActionScreen(Database DB){
         this.DB = DB;
+        
         this.setLayout(new BorderLayout(0, 20));
         this.setBackground(Color.BLACK);
         teamsAndScores = new JPanel(new GridLayout(0, 5, 10, 10));

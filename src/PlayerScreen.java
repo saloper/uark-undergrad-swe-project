@@ -12,6 +12,10 @@ public class PlayerScreen extends JPanel{
     JPanel table;
     JPanel top;
     Database DB;
+    
+
+    //Array of Ids and names
+
     public PlayerScreen(Database DB){
         this.DB = DB;
         //Set The Layout
@@ -54,14 +58,15 @@ public class PlayerScreen extends JPanel{
             JTextField redIDInput = new JTextField();
             redIDInput.setHorizontalAlignment(JTextField.CENTER);
             redIDInput.setFont(new Font("Serif", Font.BOLD, 16));
-            redIDInput.putClientProperty("index", i + 1);
+            redIDInput.setName("redId" + i);
             redIDInput.addActionListener(inputAction);
             this.table.add(redIDInput);
 
             JTextField redCodeName = new JTextField();
             redCodeName.setHorizontalAlignment(JTextField.CENTER);
             redCodeName.setFont(new Font("Serif", Font.BOLD, 16));
-            redCodeName.putClientProperty("index", i + 1);
+            redCodeName.setName("redName" + i);
+            redCodeName.putClientProperty("redName", i);
             redCodeName.addActionListener(inputAction);
             this.table.add(redCodeName);
 
@@ -71,14 +76,14 @@ public class PlayerScreen extends JPanel{
             JTextField greenIDInput = new JTextField();
             greenIDInput.setHorizontalAlignment(JTextField.CENTER);
             greenIDInput.setFont(new Font("Serif", Font.BOLD, 16));
-            greenIDInput.putClientProperty("index", i + 16);
+            greenIDInput.setName("greenID" + i);
             greenIDInput.addActionListener(inputAction);
             this.table.add(greenIDInput);
 
             JTextField greenCodeName = new JTextField();
             greenCodeName.setHorizontalAlignment(JTextField.CENTER);
             greenCodeName.setFont(new Font("Serif", Font.BOLD, 16));
-            greenCodeName.putClientProperty("index", i + 16);
+            greenCodeName.setName("greenName" + i);
             greenCodeName.addActionListener(inputAction);
             this.table.add(greenCodeName);
         }
@@ -92,7 +97,6 @@ public class PlayerScreen extends JPanel{
     ActionListener inputAction = new ActionListener(){
         public void actionPerformed(ActionEvent e){
             var textBox = (JTextField)e.getSource();
-            System.out.println(textBox.getText() + " from player " + textBox.getClientProperty("index"));
         }
     };
     // This is called when you enter text into a player field and press enter. It returns the text inside the field plus an index client property to discern which input box
