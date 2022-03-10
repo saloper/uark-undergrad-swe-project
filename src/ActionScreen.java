@@ -16,6 +16,8 @@ public class ActionScreen extends JPanel {
 
     public ActionScreen(Database DB){
         this.DB = DB;
+
+        
         this.setLayout(new BorderLayout(0, 20));
         this.setBackground(Color.BLACK);
         teamsAndScores = new JPanel(new GridLayout(0, 5, 10, 10));
@@ -170,4 +172,10 @@ public class ActionScreen extends JPanel {
     }
     // For updating top 3 scoring players for each team.
     // Can be changed to accept a Player object instead of typing in individual values if the Player class is designed to include current scores for each game.
+    public void onLoad(){
+        //print to show you the data input
+        for(int i = 0; i < this.DB.players.size(); i++){
+            System.out.println(this.DB.players.get(i));
+        }
+    }
 }

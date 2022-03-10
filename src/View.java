@@ -2,13 +2,15 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.KeyboardFocusManager;
 
 public class View implements KeyEventDispatcher{
     //Class Variables
     JFrame frame; //Main Frame
     CardLayout root; //Holds the Jpanels
     JPanel container; //Holds the root
+    SplatScreen splatScreen;
+    PlayerScreen playerScreen;
+    ActionScreen actionScreen;
     Database DB;
     Boolean gameStarted;
 
@@ -28,9 +30,13 @@ public class View implements KeyEventDispatcher{
         //Add Panels to Card Layout
         this.container.setLayout(this.root);
         this.container.setPreferredSize(new Dimension(1280,720));
-        this.container.add(new SplatScreen(), "Splat"); //Add a Splat Screen
-        this.container.add(new PlayerScreen(this.DB), "Player"); //Add a player Screen
-        this.container.add(new ActionScreen(this.DB), "ActionScreen"); //Add a action screen
+        splatScreen = new SplatScreen();
+        playerScreen = new PlayerScreen(this.DB);
+        actionScreen = new ActionScreen(this.DB);
+
+        this.container.add(splatScreen, "Splat"); //Add a Splat Screen
+        this.container.add(playerScreen, "Player"); //Add a player Screen
+        this.container.add(actionScreen, "ActionScreen"); //Add a action screen
 
         //Add to  Everything to a frame
         this.frame.add(this.container);
@@ -69,6 +75,8 @@ public class View implements KeyEventDispatcher{
     }
 
     public void showActionScreen(){
+        this.playerScreen.readFields();
+        this.actionScreen.onLoad();
         root.show(container, "ActionScreen");
         this.frame.setVisible(true);
     }
