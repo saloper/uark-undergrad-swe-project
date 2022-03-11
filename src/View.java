@@ -57,31 +57,4 @@ public class View{
         root.show(container, "Player");
         this.frame.setVisible(true);
     }
-<<<<<<< Updated upstream
-=======
-
-    public void showActionScreen(){
-        this.playerScreen.readFields();
-        this.actionScreen.onLoad();
-        root.show(container, "ActionScreen");
-        this.frame.setVisible(true);
-    }
-
-    public void showStartGame(){
-        this.showActionScreen();
-        this.actionScreen.setTimer();
-    }
-
-    @Override
-    public boolean dispatchKeyEvent(KeyEvent e) {
-        if(e.getKeyCode() == KeyEvent.VK_F5) {
-            if (!this.gameStarted) {
-                this.gameStarted = true;
-                this.showStartGame();
-            }
-        }
-        return false;
-    }
-
->>>>>>> Stashed changes
 }
