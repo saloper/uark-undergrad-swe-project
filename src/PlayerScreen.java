@@ -12,6 +12,15 @@ public class PlayerScreen extends JPanel{
     JPanel table;
     JPanel top;
     Database DB;
+    
+
+    //Array of Ids and names
+    JTextField [] redIDField;
+    JTextField [] redNameField;
+    JTextField [] greenIDField;
+    JTextField [] greenNameField;
+
+
     public PlayerScreen(Database DB){
         this.DB = DB;
         //Set The Layout
@@ -45,42 +54,48 @@ public class PlayerScreen extends JPanel{
 
         //Create Table of textboxes
         this.table = new JPanel(new GridLayout(0,6, 1, 1));
-        for(int i = 0; i < 15; i++){
-            JLabel Labels = new JLabel("PLAYER " + (i+1));
+        redIDField = new JTextField[16];
+        redNameField = new JTextField[16];
+        greenIDField = new JTextField[16];
+        greenNameField = new JTextField[16];
+        for(int i = 1; i <= 15; i++){
+            //Add Label
+            JLabel Labels = new JLabel("PLAYER " + i);
             Labels.setHorizontalAlignment(JTextField.CENTER);
             Labels.setFont(new Font("Serif", Font.BOLD, 16));
             this.table.add(Labels);
-
-            JTextField redIDInput = new JTextField();
-            redIDInput.setHorizontalAlignment(JTextField.CENTER);
-            redIDInput.setFont(new Font("Serif", Font.BOLD, 16));
-            redIDInput.putClientProperty("index", i + 1);
-            redIDInput.addActionListener(inputAction);
-            this.table.add(redIDInput);
-
-            JTextField redCodeName = new JTextField();
-            redCodeName.setHorizontalAlignment(JTextField.CENTER);
-            redCodeName.setFont(new Font("Serif", Font.BOLD, 16));
-            redCodeName.putClientProperty("index", i + 1);
-            redCodeName.addActionListener(inputAction);
-            this.table.add(redCodeName);
+            //Add RedID Input 
+            redIDField[i] = new JTextField();
+            redIDField[i].setHorizontalAlignment(JTextField.CENTER);
+            redIDField[i].setFont(new Font("Serif", Font.BOLD, 16));
+            redIDField[i].setName("redID-" + i);
+            redIDField[i].addActionListener(inputAction);
+            this.table.add(redIDField[i]);
+            //Add RedName Input
+            redNameField[i] = new JTextField();
+            redNameField[i].setHorizontalAlignment(JTextField.CENTER);
+            redNameField[i].setFont(new Font("Serif", Font.BOLD, 16));
+            redNameField[i].setName("redName" + i);
+            redNameField[i].putClientProperty("redName-", i);
+            redNameField[i].addActionListener(inputAction);
+            this.table.add(redNameField[i]);
 
             JLabel space = new JLabel();
             this.table.add(space);
-
-            JTextField greenIDInput = new JTextField();
-            greenIDInput.setHorizontalAlignment(JTextField.CENTER);
-            greenIDInput.setFont(new Font("Serif", Font.BOLD, 16));
-            greenIDInput.putClientProperty("index", i + 16);
-            greenIDInput.addActionListener(inputAction);
-            this.table.add(greenIDInput);
-
-            JTextField greenCodeName = new JTextField();
-            greenCodeName.setHorizontalAlignment(JTextField.CENTER);
-            greenCodeName.setFont(new Font("Serif", Font.BOLD, 16));
-            greenCodeName.putClientProperty("index", i + 16);
-            greenCodeName.addActionListener(inputAction);
-            this.table.add(greenCodeName);
+            //Add GreenID Input
+            greenIDField[i] = new JTextField();
+            greenIDField[i].setHorizontalAlignment(JTextField.CENTER);
+            greenIDField[i].setFont(new Font("Serif", Font.BOLD, 16));
+            greenIDField[i].setName("greenID-" + i);
+            greenIDField[i].addActionListener(inputAction);
+            this.table.add(greenIDField[i]);
+            //Add GreenName Input
+            greenNameField[i] = new JTextField();
+            greenNameField[i].setHorizontalAlignment(JTextField.CENTER);
+            greenNameField[i].setFont(new Font("Serif", Font.BOLD, 16));
+            greenNameField[i].setName("greenName-" + i);
+            greenNameField[i].addActionListener(inputAction);
+            this.table.add(greenNameField[i]);
         }
 
         //Add Components to JPanel
@@ -92,10 +107,48 @@ public class PlayerScreen extends JPanel{
     ActionListener inputAction = new ActionListener(){
         public void actionPerformed(ActionEvent e){
             var textBox = (JTextField)e.getSource();
-            System.out.println(textBox.getText() + " from player " + textBox.getClientProperty("index"));
+            //Parse Name
+            String [] identity = textBox.getName().split("-");
+            int ID = Integer.valueOf(textBox.getText());
+            int index = Integer.valueOf(identity[1]);
+            //Check if it is a redID box
+            if (identity[0].equals("redID")){
+                //Query the Database
+                String result = DB.getCodename(ID);
+                if(result != null){
+                    redNameField[index].setText(result);
+                }
+            } else if (identity[0].equals("greenID")){ //Check if greenID box
+                //Query the Database
+                String result = DB.getCodename(ID);
+                if(result != null){
+                    greenNameField[index].setText(result);
+                }
+            }
         }
     };
-    // This is called when you enter text into a player field and press enter. It returns the text inside the field plus an index client property to discern which input box
-    // the message came from. getSource returns the object which invoked the inputAction event then casts it into a JTextField and calls its methods in order to get the data needed.
-    // The "index" client property represents red players from 1-15, and green players from 16-30. This can be moved to another class later if needed.
+
+    //Method to Read all of the fields into data array
+    public void readFields(){
+        for (int i = 1; i <= 15; i++){
+            if(!redIDField[i].getText().isBlank() && !redNameField[i].getText().isBlank()){
+                int ID = Integer.valueOf(redIDField[i].getText());
+                String codeName = redNameField[i].getText();
+                this.DB.players.add(new Player(codeName,ID, true));
+                //If not in the DB add it to the DB
+                if(this.DB.getCodename(ID) == null){
+                    this.DB.addPlayer(ID, codeName);
+                }
+            }
+            if(!greenIDField[i].getText().isBlank() && !greenNameField[i].getText().isBlank()){
+                int ID = Integer.valueOf(greenIDField[i].getText());
+                String codeName = greenNameField[i].getText();
+                this.DB.players.add(new Player(codeName,ID, false));
+                //If not in the DB add it to the DB
+                if(this.DB.getCodename(ID) == null){
+                    this.DB.addPlayer(ID, codeName);
+                }
+            }
+        }
+    }
 }
