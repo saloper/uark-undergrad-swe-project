@@ -83,6 +83,7 @@ public class View implements KeyEventDispatcher{
 
     public void showStartGame(){
         this.showActionScreen();
+        this.actionScreen.setTimer();
     }
 
     @Override
