@@ -53,7 +53,7 @@ public class View implements KeyEventDispatcher{
     public void launch(){
         this.showSplat();
         try {
-            Thread.sleep(3000);
+            Thread.sleep(300);
         } catch (InterruptedException e) {
             System.out.println("Could not Sleep!");
             e.printStackTrace();
@@ -77,6 +77,7 @@ public class View implements KeyEventDispatcher{
     public void showActionScreen(){
         this.playerScreen.readFields();
         this.actionScreen.onLoad();
+        for(int i=0;i<10;i++) this.actionScreen.sendKillMessage(new Player("person",6,true), new Player("people",7,false));
         root.show(container, "ActionScreen");
         this.frame.setVisible(true);
     }
