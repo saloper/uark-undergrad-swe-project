@@ -1,40 +1,33 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ActionScreen extends JPanel {
-
+    Database DB;
     JPanel teamsAndScores;
     JPanel killFeed;
+    JPanel countdownTimer;
     // teamsAndScores displays the team color along with the top 3 players and their scores for each team.
     // killFeed is the panel which will hold the scrolling text kill feed and will display a message when one player tags another.
 
+    JLabel redThirdPlaceName, redSecondPlaceName, redFirstPlaceName, greenThirdPlaceName, greenSecondPlaceName, greenFirstPlaceName;
+    JLabel redThirdPlaceScore, redSecondPlaceScore, redFirstPlaceScore, greenThirdPlaceScore, greenSecondPlaceScore, greenFirstPlaceScore;
     JLabel redTeamScore, greenTeamScore;
-<<<<<<< Updated upstream
+    JLabel remainingTime1, remainingTime2;
     // Variables for the top 3 players and their scores for each team. I couldn't find a simpler way to do this than to have a variable for each placement and score
     // so that they can be modified individually when updating scores. Perhaps a more streamlined solution will come later.
 
-    public ActionScreen(){
-        this.setLayout(new BorderLayout(0, 20));
-=======
-    JLabel remainingTime1, remainingTime2;
-
-    JLabel redPlayers[];
-    JLabel redPlayerScores[];
-    JLabel greenPlayers[];
-    JLabel greenPlayerScores[];
-    // Arrays for the players of each team and their scores.
+    JTextArea feed;
+    // Variables for the scrolling kill feed
 
     public ActionScreen(Database DB){
         this.DB = DB;
-        redPlayers = new JLabel[15];
-        redPlayerScores = new JLabel[15];
-        greenPlayers = new JLabel[15];
-        greenPlayerScores = new JLabel[15];
+
         
-        this.setLayout(new BorderLayout(0, 0));
->>>>>>> Stashed changes
+        this.setLayout(new BorderLayout(0, 20));
         this.setBackground(Color.BLACK);
-        teamsAndScores = new JPanel(new GridLayout(0, 5, 10, 0));
+        teamsAndScores = new JPanel(new GridLayout(0, 5, 10, 10));
         teamsAndScores.setBackground(Color.BLACK);
         // The teamsAndScores panel will be a grid which will contain the team names and the top scoring players. The grid has 6 columns, some of which will be blank.
         
@@ -48,54 +41,100 @@ public class ActionScreen extends JPanel {
         setLabelValues(greenTeamName, 1);
         greenTeamName.setForeground(Color.GREEN);
 
-        this.teamsAndScores.add(new JLabel()); // Space
+        this.teamsAndScores.add(new JLabel());
 
-        for (int i = 0; i < 15; i++){
-            JLabel redPlayer = new JLabel("--------");
-            JLabel redScore = new JLabel("0000");
-            setLabelValues(redPlayer, 2);
-            setLabelValues(redScore, 2);
+        // ======================
+        // Team high scores below
+        // ======================
 
-            redPlayers[i] = redPlayer;
-            redPlayerScores[i] = redScore;
-            
-            this.teamsAndScores.add(new JLabel()); // Space
+        redFirstPlaceName = new JLabel("RED FIRST PLACE");
+        setLabelValues(redFirstPlaceName, 2);
+        redFirstPlaceScore = new JLabel("0000");
+        setLabelValues(redFirstPlaceScore, 2);
 
-            JLabel greenPlayer = new JLabel("--------");
-            JLabel greenScore = new JLabel("0000");
-            setLabelValues(greenPlayer, 2);
-            setLabelValues(greenScore, 2);
+        this.teamsAndScores.add(new JLabel());
 
-            greenPlayers[i] = greenPlayer;
-            greenPlayerScores[i] = greenPlayer;
-        }
-        // Adding players for each team and their scores.
+        greenFirstPlaceName = new JLabel("GREEN FIRST PLACE");
+        setLabelValues(greenFirstPlaceName, 2);
+        greenFirstPlaceScore = new JLabel("0000");
+        setLabelValues(greenFirstPlaceScore, 2);
+
+        redSecondPlaceName = new JLabel("RED SECOND PLACE");
+        setLabelValues(redSecondPlaceName, 2);
+        redSecondPlaceScore = new JLabel("0000");
+        setLabelValues(redSecondPlaceScore, 2);
+
+        this.teamsAndScores.add(new JLabel());
+
+        greenSecondPlaceName = new JLabel("GREEN SECOND PLACE");
+        setLabelValues(greenSecondPlaceName, 2);
+        greenSecondPlaceScore = new JLabel("0000");
+        setLabelValues(greenSecondPlaceScore, 2);
+
+        redThirdPlaceName = new JLabel("RED THIRD PLACE");
+        setLabelValues(redThirdPlaceName, 2);
+        redThirdPlaceScore = new JLabel("0000");
+        setLabelValues(redThirdPlaceScore, 2);
+
+        this.teamsAndScores.add(new JLabel());
+
+        greenThirdPlaceName = new JLabel("GREEN THIRD PLACE");
+        setLabelValues(greenThirdPlaceName, 2);
+        greenThirdPlaceScore = new JLabel("0000");
+        setLabelValues(greenThirdPlaceScore, 2);
+
+        // ======================
+        // Team High Scores Above
+        // ======================
 
         for (int i = 0; i < 5; i++) { this.teamsAndScores.add(new JLabel()); } // adding a bunch of spaces in a row without copypasting lines.
-        this.teamsAndScores.add(new JLabel()); // Space
+        this.teamsAndScores.add(new JLabel());
         redTeamScore = new JLabel("0000");
         setLabelValues(redTeamScore, 2);
 
-        this.teamsAndScores.add(new JLabel()); // Space
-        this.teamsAndScores.add(new JLabel()); // Space
+        this.teamsAndScores.add(new JLabel());
+        this.teamsAndScores.add(new JLabel());
 
         greenTeamScore = new JLabel("0000");
         setLabelValues(greenTeamScore, 2);
         // These are the total scores for each team which are displayed at the bottom of the grid layout.
 
         killFeed = new JPanel();
-        killFeed.setBackground(Color.DARK_GRAY);
+        killFeed.setBackground(Color.BLUE);
+        feed = new JTextArea(15, 115);
+        killFeed.add(feed);
         // The kill feed will go in its own border layout section and will house the scrolling text which is displayed when players tag one another.
+
+        //Create bottom-aligned panel for the timer
+        countdownTimer = new JPanel();
+        countdownTimer.setBackground(Color.BLACK);
+        countdownTimer.setPreferredSize(new Dimension(1280,70));
+
+        //Initial text will be "Game begins in," indicating it is the warning timer.
+        remainingTime1 = new JLabel("Game Begins In: ");
+        remainingTime1.setFont(new Font("Serif", Font.BOLD, 35));
+        remainingTime1.setHorizontalAlignment(JLabel.RIGHT);
+        remainingTime1.setForeground(Color.WHITE);
+
+        //Numerical time value
+        remainingTime2 = new JLabel("0:00");
+        remainingTime2.setFont(new Font("Serif", Font.BOLD, 35));
+        remainingTime2.setHorizontalAlignment(JLabel.RIGHT);
+        remainingTime2.setForeground(Color.WHITE);
+
+        countdownTimer.add(remainingTime1);
+        countdownTimer.add(remainingTime2);
 
         this.add(this.teamsAndScores, BorderLayout.PAGE_START);
         this.add(this.killFeed, BorderLayout.CENTER);
+        this.add(this.countdownTimer, BorderLayout.SOUTH);
     }
 
     private void setLabelValues(JLabel label, int type){
         switch (type) {
             case 1:
-                label.setPreferredSize(new Dimension(480, 25));
-                label.setFont(new Font("Serif", Font.BOLD, 30));
+                label.setPreferredSize(new Dimension(480, 50));
+                label.setFont(new Font("Serif", Font.BOLD, 40));
                 label.setForeground(Color.RED);
                 label.setHorizontalAlignment(JLabel.LEFT);
                 this.teamsAndScores.add(label);
@@ -113,8 +152,9 @@ public class ActionScreen extends JPanel {
     // This method prevents having to copy and paste the same lines over and over for each JLabel text.
 
     public void sendKillMessage(Player killer, Player killed){
-        // Display a message on the kill feed that says something like "killer tagged killed
+        feed.insert(killer.getName() + " killed " + killed.getName() + "!\n",0);
     }
+    // This method prints a kill 
 
     public void updateRedTeamScore(int score){
         redTeamScore.setText(Integer.toString(score));
@@ -124,7 +164,6 @@ public class ActionScreen extends JPanel {
         greenTeamScore.setText(Integer.toString(score));
     }
 
-<<<<<<< Updated upstream
     public void updateScoreboard(String playerName, int score, int placement, boolean isRed){
         switch (placement) {
             case 1:
@@ -162,10 +201,7 @@ public class ActionScreen extends JPanel {
                 break;
         }
     }
-    // For updating top 3 scoring players for each team.
-    // Can be changed to accept a Player object instead of typing in individual values if the Player class is designed to include current scores for each game.
-}
-=======
+
     public void setTimer() {
         //Utilizes Java's timer and TimerTask classes
         //0 is the delay in beginning the timer, 1000 is the period in which the timer updates (in ms)
@@ -208,26 +244,12 @@ public class ActionScreen extends JPanel {
         }
     }
 
+    // For updating top 3 scoring players for each team.
+    // Can be changed to accept a Player object instead of typing in individual values if the Player class is designed to include current scores for each game.
     public void onLoad(){
-        
-        int redIndex = 0;
-        int greenIndex = 0;
+        //print to show you the data input
         for(int i = 0; i < this.DB.players.size(); i++){
-            
-            var player = this.DB.players.get(i);
-            if (player.isRedTeam){
-                redPlayers[redIndex].setText(player.getName());
-                redIndex++;
-            }
-            else{
-                greenPlayers[greenIndex].setText(player.getName());
-                greenIndex++;
-            }
-            // This takes players from the player arraylist from the database and adds them to each team's playerlist.
-
-            System.out.println("Getting player from DB: " + player);
-            // Printing to show that names are gathered correctly.
+            System.out.println(this.DB.players.get(i));
         }
     }
 }
->>>>>>> Stashed changes

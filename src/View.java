@@ -1,14 +1,18 @@
 //View File CSCE 3513 Team 6 Project
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
-public class View{
+public class View implements KeyEventDispatcher{
     //Class Variables
     JFrame frame; //Main Frame
     CardLayout root; //Holds the Jpanels
     JPanel container; //Holds the root
+    SplatScreen splatScreen;
+    PlayerScreen playerScreen;
+    ActionScreen actionScreen;
     Database DB;
-    public static Dimension windowSize;
+    Boolean gameStarted;
 
 
     //Constructor
@@ -18,14 +22,21 @@ public class View{
         this.frame = new JFrame();
         this.root = new CardLayout();
         this.container = new JPanel();
-        windowSize = new Dimension(1280, 720);
-    
+
+        //Add Key Manage
+        KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+        manager.addKeyEventDispatcher(this);
+
         //Add Panels to Card Layout
         this.container.setLayout(this.root);
-        this.container.setPreferredSize(windowSize);
-        this.container.add(new SplatScreen(), "Splat"); //Add a Splat Screen
-        this.container.add(new PlayerScreen(this.DB), "Player"); //Add a player Screen
-        this.container.add(new ActionScreen(), "Action"); // Add an action screen
+        this.container.setPreferredSize(new Dimension(1280,720));
+        splatScreen = new SplatScreen();
+        playerScreen = new PlayerScreen(this.DB);
+        actionScreen = new ActionScreen(this.DB);
+
+        this.container.add(splatScreen, "Splat"); //Add a Splat Screen
+        this.container.add(playerScreen, "Player"); //Add a player Screen
+        this.container.add(actionScreen, "ActionScreen"); //Add a action screen
 
         //Add to  Everything to a frame
         this.frame.add(this.container);
@@ -34,19 +45,20 @@ public class View{
         this.frame.setResizable(false);
         this.frame.setVisible(false); //Show a Frame
 
+        this.gameStarted = false; // game does not start by default
+
     }
 
     //Method to Lauch Application with splat screen pause
     public void launch(){
         this.showSplat();
         try {
-            Thread.sleep(1000);
+            Thread.sleep(300);
         } catch (InterruptedException e) {
             System.out.println("Could not Sleep!");
             e.printStackTrace();
         }
-        //this.showPlayer();
-        this.showActionScreen();
+        this.showPlayer();
     }
 
     //Method to show the Splat Panel
@@ -63,7 +75,27 @@ public class View{
     }
 
     public void showActionScreen(){
-        root.show(container, "Action");
+        this.playerScreen.readFields();
+        this.actionScreen.onLoad();
+        for(int i=0;i<10;i++) this.actionScreen.sendKillMessage(new Player("person",6,true), new Player("people",7,false));
+        root.show(container, "ActionScreen");
         this.frame.setVisible(true);
     }
+
+    public void showStartGame(){
+        this.showActionScreen();
+        this.actionScreen.setTimer();
+    }
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent e) {
+        if(e.getKeyCode() == KeyEvent.VK_F5) {
+            if (!this.gameStarted) {
+                this.gameStarted = true;
+                this.showStartGame();
+            }
+        }
+        return false;
+    }
+
 }

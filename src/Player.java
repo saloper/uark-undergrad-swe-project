@@ -14,6 +14,11 @@ public class Player {
         id = player.getId();
     }
 
+    @Override
+    public String toString() {
+        return "Player Codename: " + name + " ID: " + id + " isRedTeam: " + isRedTeam;
+    }
+
     public String getName() { return name; }
     public int getId() { return id; }
     public boolean getTeam() { return isRedTeam; }

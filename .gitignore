@@ -1,1 +1,9 @@
 bin
+*.class
+.vscode
+.idea/dataSources.xml
+.idea/libraries/postgresql_42_3_3.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+CSCE3513-Project.iml

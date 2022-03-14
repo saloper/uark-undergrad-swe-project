@@ -1,10 +1,13 @@
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Properties;
 
 public class Database {
         // jdbc:postgresql://<host>:<port>/<dbname>?sslmode=require&user=<username>&password=<password>
     // private static String URL = "jdbc:postgresql://ec2-3-227-195-74.compute-1.amazonaws.com:5432/dd18okmuin3qv3?sslmode=require&user=rnjqwllkcxoxck&password=8542a67352bf54d8d04c068448e7e19628adaa56d96eb04c89d4718c60b79738";
     static Connection connection;
+    ArrayList<Player> players;
+
 
     public Database() throws ClassNotFoundException{
         Class.forName("org.postgresql.Driver");
@@ -19,6 +22,7 @@ public class Database {
             System.out.println("Error in Connecting to DB!");
             e.printStackTrace();
         }
+        players = new ArrayList<Player>();
     }
 
     public String getCodename(int id){
@@ -28,7 +32,7 @@ public class Database {
             if(results.next()){
                 return results.getString("Codename");
             } else{
-                return "null";
+                return null;
             }
         } catch (SQLException e) {
             System.out.println("Query failed to execute!");

@@ -5,7 +5,6 @@ public class App{
     View view;
     Database DB;
 
-
     //Constructor 
     public App() throws ClassNotFoundException{
         this.DB = new Database();
@@ -19,12 +18,6 @@ public class App{
     public static void main(String args[]) throws ClassNotFoundException{
         App app = new App();
         app.launch();
-        app.DB.deleteId(3);
-        app.DB.deleteId(4);
-        app.DB.addPlayer(3, "Spencer");
-        app.DB.addPlayer(4, "Justin");
-        System.out.println("Getting Player 3: " + app.DB.getCodename(3));
-        System.out.println("Getting Player 3: " + app.DB.getCodename(4));
     }
 
 }
