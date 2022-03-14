@@ -18,6 +18,9 @@ public class ActionScreen extends JPanel {
     // Variables for the top 3 players and their scores for each team. I couldn't find a simpler way to do this than to have a variable for each placement and score
     // so that they can be modified individually when updating scores. Perhaps a more streamlined solution will come later.
 
+    JTextArea feed;
+    // Variables for the scrolling kill feed
+
     public ActionScreen(Database DB){
         this.DB = DB;
 
@@ -97,7 +100,9 @@ public class ActionScreen extends JPanel {
         // These are the total scores for each team which are displayed at the bottom of the grid layout.
 
         killFeed = new JPanel();
-        killFeed.setBackground(Color.DARK_GRAY);
+        killFeed.setBackground(Color.BLUE);
+        feed = new JTextArea(15, 115);
+        killFeed.add(feed);
         // The kill feed will go in its own border layout section and will house the scrolling text which is displayed when players tag one another.
 
         //Create bottom-aligned panel for the timer
@@ -147,8 +152,9 @@ public class ActionScreen extends JPanel {
     // This method prevents having to copy and paste the same lines over and over for each JLabel text.
 
     public void sendKillMessage(Player killer, Player killed){
-        // Display a message on the kill feed that says something like "killer tagged killed
+        feed.insert(killer.getName() + " killed " + killed.getName() + "!\n",0);
     }
+    // This method prints a kill 
 
     public void updateRedTeamScore(int score){
         redTeamScore.setText(Integer.toString(score));
