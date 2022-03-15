@@ -30,13 +30,6 @@ java -cp "../lib/postgresql-42.3.3.jar:." App
 ```
 
 
-### If images are broke
-change 
-```BufferedImage logo = ImageIO.read(new File("resources/splat.jpg"));```
-in SplatScreen.java to 
-```BufferedImage logo = ImageIO.read(new File("../resources/splat.jpg"));```
-
-
 ## Members
 - Justin Austin
 - Spencer Loper
