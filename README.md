@@ -3,7 +3,7 @@
 ```
 git clone https://github.com/saloper/CSCE3513-Project.git
 cd CSCE3513-Project
-./windowsbuild.bat
+windowsbuild.bat
 ```
 or manually
 ```
