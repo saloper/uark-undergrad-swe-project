@@ -53,7 +53,7 @@ public class View implements KeyEventDispatcher{
     public void launch(){
         this.showSplat();
         try {
-            Thread.sleep(300);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             System.out.println("Could not Sleep!");
             e.printStackTrace();
@@ -94,6 +94,9 @@ public class View implements KeyEventDispatcher{
                 this.gameStarted = true;
                 this.showStartGame();
             }
+        }
+        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            System.exit(0);
         }
         return false;
     }
