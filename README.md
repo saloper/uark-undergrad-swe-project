@@ -14,7 +14,7 @@ cd bin
 java -cp .;..\lib\postgresql-42.3.3.jar App
 ```
 
-## Build instructions (for linux)
+## Build instructions (for linux and macos)
 ```
 git clone https://github.com/saloper/CSCE3513-Project.git
 cd CSCE3513-Project
