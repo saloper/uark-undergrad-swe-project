@@ -49,7 +49,7 @@ public class PlayerScreen extends JPanel{
         JLabel greenTeamText = new JLabel("Green Team");
         greenTeamText.setPreferredSize(new Dimension(270, 20));
         greenTeamText.setFont(new Font("Serif", Font.BOLD, 24));
-        greenTeamText.setForeground(Color.GREEN);
+        greenTeamText.setForeground(new Color(42, 150, 37));
         greenTeamText.setHorizontalAlignment(JLabel.LEFT);
         this.top.add(greenTeamText, BorderLayout.LINE_END);
 
@@ -61,30 +61,19 @@ public class PlayerScreen extends JPanel{
         greenIDField = new JTextField[16];
         greenNameField = new JTextField[16];
 
-        JLabel LabelA = new JLabel("");
-        LabelA.setHorizontalAlignment(JTextField.CENTER);
-        LabelA.setFont(new Font("Serif", Font.BOLD, 20));
-        this.table.add(LabelA);
-        JLabel LabelB = new JLabel("ID");
-        LabelB.setHorizontalAlignment(JTextField.CENTER);
-        LabelB.setFont(new Font("Serif", Font.BOLD, 20));
-        this.table.add(LabelB);
-        JLabel LabelC = new JLabel("Codename");
-        LabelC.setHorizontalAlignment(JTextField.CENTER);
-        LabelC.setFont(new Font("Serif", Font.BOLD, 20));
-        this.table.add(LabelC);
-        JLabel LabelD = new JLabel("");
-        LabelD.setHorizontalAlignment(JTextField.CENTER);
-        LabelD.setFont(new Font("Serif", Font.BOLD, 20));
-        this.table.add(LabelD);
-        JLabel LabelE = new JLabel("ID");
-        LabelE.setHorizontalAlignment(JTextField.CENTER);
-        LabelE.setFont(new Font("Serif", Font.BOLD, 20));
-        this.table.add(LabelE);
-        JLabel LabelF = new JLabel("Codename");
-        LabelF.setHorizontalAlignment(JTextField.CENTER);
-        LabelF.setFont(new Font("Serif", Font.BOLD, 20));
-        this.table.add(LabelF);
+        //Add "ID" and "Codename" above text fields for clarity
+        for (int i = 0; i < 6; i++) {
+            JLabel Header = new JLabel("");
+            if (i == 0 || i == 3)
+                Header.setText("");
+            if (i == 1 || i == 4)
+                Header.setText("ID");
+            if (i == 2 || i == 5)
+                Header.setText("Codename");
+            Header.setHorizontalAlignment(JTextField.CENTER);
+            Header.setFont(new Font("Serif", Font.BOLD, 20));
+            this.table.add(Header);
+        }
 
         for(int i = 1; i <= 15; i++){
             //Add Label
@@ -126,40 +115,28 @@ public class PlayerScreen extends JPanel{
             this.table.add(greenNameField[i]);
         }
 
-        //Bottom box shows controls
-        this.bottom = new JPanel(new GridLayout(2,3, 1, 0)); //Layout as BorderLayout
+        //Footer shows various controls
+        this.bottom = new JPanel(new GridLayout(2,3, 0, 0)); //Layout as BorderLayout
         this.bottom.setPreferredSize(new Dimension(1280, 65));
-        JLabel Label1 = new JLabel("Esc:");
-        Label1.setHorizontalAlignment(JTextField.CENTER);
-        Label1.setFont(new Font("Serif", Font.BOLD, 20));
-        JLabel Label2 = new JLabel("F5:");
-        Label2.setHorizontalAlignment(JTextField.CENTER);
-        Label2.setFont(new Font("Serif", Font.BOLD, 20));
-        JLabel Label3 = new JLabel("Enter:");
-        Label3.setHorizontalAlignment(JTextField.CENTER);
-        Label3.setFont(new Font("Serif", Font.BOLD, 20));
-        JLabel Label4 = new JLabel("Exit the program");
-        Label4.setHorizontalAlignment(JTextField.CENTER);
-        Label4.setFont(new Font("Serif", Font.BOLD, 20));
-        JLabel Label5 = new JLabel("Move to Action Screen");
-        Label5.setHorizontalAlignment(JTextField.CENTER);
-        Label5.setFont(new Font("Serif", Font.BOLD, 20));
-        JLabel Label6 = new JLabel("Search Database");
-        Label6.setHorizontalAlignment(JTextField.CENTER);
-        Label6.setFont(new Font("Serif", Font.BOLD, 20));
-
-        Label1.setVerticalAlignment(JTextField.CENTER);
-        Label2.setVerticalAlignment(JTextField.CENTER);
-        Label3.setVerticalAlignment(JTextField.CENTER);
-        Label4.setVerticalAlignment(JTextField.CENTER);
-        Label5.setVerticalAlignment(JTextField.CENTER);
-        Label6.setVerticalAlignment(JTextField.CENTER);
-        this.bottom.add(Label1);
-        this.bottom.add(Label2);
-        this.bottom.add(Label3);
-        this.bottom.add(Label4);
-        this.bottom.add(Label5);
-        this.bottom.add(Label6);
+        for (int i = 0; i < 6; i++) {
+            JLabel Instruct = new JLabel();
+            if (i == 0)
+                Instruct.setText("Esc:");
+            if (i == 1)
+                Instruct.setText("F5:");
+            if (i == 2)
+                Instruct.setText("Enter:");
+            if (i == 3)
+                Instruct.setText("Exit program");
+            if (i == 4)
+                Instruct.setText("Go to Action Screen");
+            if (i == 5)
+                Instruct.setText("Search DB");
+            Instruct.setHorizontalAlignment(JTextField.CENTER);
+            Instruct.setVerticalAlignment(JTextField.CENTER);
+            Instruct.setFont(new Font("Serif", Font.BOLD, 20));
+            this.bottom.add(Instruct);
+        }
 
         //Add Components to JPanel
         this.add(this.top, BorderLayout.PAGE_START);

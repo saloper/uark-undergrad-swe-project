@@ -17,10 +17,18 @@ public class SplatScreen extends JPanel{
             BufferedImage logo = ImageIO.read(new File("../resources/splat.jpg"));
             JLabel logoLabel = new JLabel(new ImageIcon(logo));
             this.add(logoLabel, BorderLayout.CENTER);
-        } catch (IOException e) {
-            System.out.println("Splat logo failed to load");
-            e.printStackTrace();
         }
-
+        catch (IOException e) {
+            //Adding a second read for IDE use
+            try {
+                BufferedImage logo = ImageIO.read(new File("resources/splat.jpg"));
+                JLabel logoLabel = new JLabel(new ImageIcon(logo));
+                this.add(logoLabel, BorderLayout.CENTER);
+            }
+            catch (IOException f) {
+                System.out.println("Splat logo failed to load");
+                f.printStackTrace();
+            }
+        }
     }
 }
