@@ -13,7 +13,7 @@ public class PlayerScreen extends JPanel{
     JPanel top;
     JPanel bottom;
     Database DB;
-    
+
 
     //Array of Ids and names
     JTextField [] redIDField;
@@ -95,6 +95,9 @@ public class PlayerScreen extends JPanel{
             redNameField[i].setName("redName" + i);
             redNameField[i].putClientProperty("redName-", i);
             redNameField[i].addActionListener(inputAction);
+            redNameField[i].setBackground(new Color(210, 210, 210));
+            redNameField[i].setEditable(false);
+            redNameField[i].setFocusable(false);
             this.table.add(redNameField[i]);
 
             JLabel space = new JLabel();
@@ -112,6 +115,9 @@ public class PlayerScreen extends JPanel{
             greenNameField[i].setFont(new Font("Serif", Font.BOLD, 16));
             greenNameField[i].setName("greenName-" + i);
             greenNameField[i].addActionListener(inputAction);
+            greenNameField[i].setBackground(new Color(210, 210, 210));
+            greenNameField[i].setEditable(false);
+            greenNameField[i].setFocusable(false);
             this.table.add(greenNameField[i]);
         }
 
@@ -157,12 +163,38 @@ public class PlayerScreen extends JPanel{
                 String result = DB.getCodename(ID);
                 if(result != null){
                     redNameField[index].setText(result);
+                    if (redNameField[index].isEditable()) {
+                        redNameField[index].setBackground(new Color(210, 210, 210));
+                        redNameField[index].setEditable(false);
+                        redNameField[index].setFocusable(false);
+                    }
+                }
+                else {
+                   redNameField[index].setBackground(Color.WHITE);
+                   redNameField[index].setEditable(true);
+                   redNameField[index].setFocusable(true);
+                   if (!redNameField[index].getText().isBlank()) {
+                       redNameField[index].setText(null);
+                   }
                 }
             } else if (identity[0].equals("greenID")){ //Check if greenID box
                 //Query the Database
                 String result = DB.getCodename(ID);
                 if(result != null){
                     greenNameField[index].setText(result);
+                    if (greenNameField[index].isEditable()) {
+                        greenNameField[index].setBackground(new Color(210, 210, 210));
+                        greenNameField[index].setEditable(false);
+                        greenNameField[index].setFocusable(false);
+                    }
+                }
+                else {
+                    greenNameField[index].setBackground(Color.WHITE);
+                    greenNameField[index].setEditable(true);
+                    greenNameField[index].setFocusable(true);
+                    if (!greenNameField[index].getText().isBlank()) {
+                        greenNameField[index].setText(null);
+                    }
                 }
             }
         }
