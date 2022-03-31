@@ -72,6 +72,7 @@ public class View implements KeyEventDispatcher{
     public void showPlayer(){
         root.show(container, "Player");
         this.frame.setVisible(true);
+        this.playerScreen.redIDField[1].requestFocusInWindow();
     }
 
     public void showActionScreen(){
