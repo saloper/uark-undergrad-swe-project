@@ -11,7 +11,7 @@ public class ActionScreen extends JPanel {
     // teamsAndScores displays the team color along with the top 3 players and their scores for each team.
     // killFeed is the panel which will hold the scrolling text kill feed and will display a message when one player tags another.
 
-    JLabel redTeamScore, greenTeamScore;
+    JLabel redTeamScore, greenTeamScore, killTest;
     JLabel remainingTime1, remainingTime2;
 
     JLabel redPlayers[];
@@ -80,6 +80,8 @@ public class ActionScreen extends JPanel {
 
         killFeed = new JPanel();
         killFeed.setBackground(Color.DARK_GRAY);
+        killTest = new JLabel("blank");
+        killFeed.add(killTest);
         // The kill feed will go in its own border layout section and will house the scrolling text which is displayed when players tag one another.
 
         //Create bottom-aligned panel for the timer
