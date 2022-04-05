@@ -11,7 +11,7 @@ public class ActionScreen extends JPanel {
     // teamsAndScores displays the team color along with the top 3 players and their scores for each team.
     // killFeed is the panel which will hold the scrolling text kill feed and will display a message when one player tags another.
 
-    JLabel redTeamScore, greenTeamScore, killTest;
+    JLabel redTeamScore, greenTeamScore;
     JLabel remainingTime1, remainingTime2;
 
     JLabel redPlayers[];
@@ -19,6 +19,9 @@ public class ActionScreen extends JPanel {
     JLabel greenPlayers[];
     JLabel greenPlayerScores[];
     // Arrays for the players of each team and their scores.
+
+    JTextArea feed;
+    // Text box for the scrolling kill feed
 
     public ActionScreen(Database DB){
         this.DB = DB;
@@ -79,9 +82,9 @@ public class ActionScreen extends JPanel {
         // These are the total scores for each team which are displayed at the bottom of the grid layout.
 
         killFeed = new JPanel();
-        killFeed.setBackground(Color.DARK_GRAY);
-        killTest = new JLabel("blank");
-        killFeed.add(killTest);
+        killFeed.setBackground(Color.BLUE);
+        feed = new JTextArea(15, 115);
+        killFeed.add(feed);
         // The kill feed will go in its own border layout section and will house the scrolling text which is displayed when players tag one another.
 
         //Create bottom-aligned panel for the timer
@@ -131,8 +134,9 @@ public class ActionScreen extends JPanel {
     // This method prevents having to copy and paste the same lines over and over for each JLabel text.
 
     public void sendKillMessage(Player killer, Player killed){
-        // Display a message on the kill feed that says something like "killer tagged killed
+        feed.insert(killer.getName() + " killed " + killed.getName() + "!\n",0);
     }
+    // This method prints a kill message using the names of two killed players
 
     public void updateRedTeamScore(int score){
         redTeamScore.setText(Integer.toString(score));
