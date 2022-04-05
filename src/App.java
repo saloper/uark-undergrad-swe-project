@@ -31,10 +31,10 @@ public class App{
 		while (true)
 		{
 
-			// Step 2 : create a DatgramPacket to receive the data.
+			// Step 2 : Create a DatagramPacket to receive the data.
 			DpReceive = new DatagramPacket(receive, receive.length);
 
-			// Step 3 : revieve the data in byte buffer.
+			// Step 3 : Receive the data in byte buffer.
 			ds.receive(DpReceive);
             StringBuilder message = data(receive);
 			System.out.println("Client:-" + message);

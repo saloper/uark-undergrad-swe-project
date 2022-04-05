@@ -165,6 +165,7 @@ public class ActionScreen extends JPanel {
             //End the game if it has started and both minutes and seconds are 0
             if (seconds == 0 && gameStarted && minutes == 0) {
                 cancel();
+                View.gameOver = true;
             }
 
             //If the game has not started and both minutes and seconds are zero, start the game

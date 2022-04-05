@@ -13,6 +13,7 @@ public class View implements KeyEventDispatcher{
     ActionScreen actionScreen;
     Database DB;
     Boolean gameStarted;
+    static Boolean gameOver = false;
 
 
     //Constructor
@@ -90,10 +91,24 @@ public class View implements KeyEventDispatcher{
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent e) {
-        if(e.getKeyCode() == KeyEvent.VK_F5) {
+        if(e.getKeyCode() == KeyEvent.VK_F5 && e.getID() == KeyEvent.KEY_PRESSED) {
+            System.out.println("F5 called");
             if (!this.gameStarted) {
                 this.gameStarted = true;
+                this.actionScreen.remainingTime1.setText("Game Begins In: ");
                 this.showStartGame();
+            }
+        }
+        if (e.getKeyCode() == KeyEvent.VK_F1 && e.getID() == KeyEvent.KEY_PRESSED) {
+            System.out.println("gameStarted: " + this.gameStarted);
+            System.out.println("actionScreen.isVisible(): " + this.actionScreen.isVisible());
+            System.out.println("gameOver: " + gameOver);
+            if (this.gameStarted && this.actionScreen.isVisible() && gameOver) {
+                this.showPlayer();
+                this.playerScreen.clearFields();
+                this.DB.players.clear();
+                gameOver = false;
+                gameStarted = false;
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
