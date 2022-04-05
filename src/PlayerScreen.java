@@ -11,8 +11,9 @@ public class PlayerScreen extends JPanel{
     //Class Variables
     JPanel table;
     JPanel top;
+    JPanel bottom;
     Database DB;
-    
+
 
     //Array of Ids and names
     JTextField [] redIDField;
@@ -48,9 +49,10 @@ public class PlayerScreen extends JPanel{
         JLabel greenTeamText = new JLabel("Green Team");
         greenTeamText.setPreferredSize(new Dimension(270, 20));
         greenTeamText.setFont(new Font("Serif", Font.BOLD, 24));
-        greenTeamText.setForeground(Color.GREEN);
+        greenTeamText.setForeground(new Color(42, 150, 37));
         greenTeamText.setHorizontalAlignment(JLabel.LEFT);
         this.top.add(greenTeamText, BorderLayout.LINE_END);
+
 
         //Create Table of textboxes
         this.table = new JPanel(new GridLayout(0,6, 1, 1));
@@ -58,6 +60,21 @@ public class PlayerScreen extends JPanel{
         redNameField = new JTextField[16];
         greenIDField = new JTextField[16];
         greenNameField = new JTextField[16];
+
+        //Add "ID" and "Codename" above text fields for clarity
+        for (int i = 0; i < 6; i++) {
+            JLabel Header = new JLabel("");
+            if (i == 0 || i == 3)
+                Header.setText("");
+            if (i == 1 || i == 4)
+                Header.setText("ID");
+            if (i == 2 || i == 5)
+                Header.setText("Codename");
+            Header.setHorizontalAlignment(JTextField.CENTER);
+            Header.setFont(new Font("Serif", Font.BOLD, 20));
+            this.table.add(Header);
+        }
+
         for(int i = 1; i <= 15; i++){
             //Add Label
             JLabel Labels = new JLabel("PLAYER " + i);
@@ -78,6 +95,9 @@ public class PlayerScreen extends JPanel{
             redNameField[i].setName("redName" + i);
             redNameField[i].putClientProperty("redName-", i);
             redNameField[i].addActionListener(inputAction);
+            redNameField[i].setBackground(new Color(210, 210, 210));
+            redNameField[i].setEditable(false);
+            redNameField[i].setFocusable(false);
             this.table.add(redNameField[i]);
 
             JLabel space = new JLabel();
@@ -95,13 +115,39 @@ public class PlayerScreen extends JPanel{
             greenNameField[i].setFont(new Font("Serif", Font.BOLD, 16));
             greenNameField[i].setName("greenName-" + i);
             greenNameField[i].addActionListener(inputAction);
+            greenNameField[i].setBackground(new Color(210, 210, 210));
+            greenNameField[i].setEditable(false);
+            greenNameField[i].setFocusable(false);
             this.table.add(greenNameField[i]);
+        }
+
+        //Footer shows various controls
+        this.bottom = new JPanel(new GridLayout(2,3, 0, 0)); //Layout as BorderLayout
+        this.bottom.setPreferredSize(new Dimension(1280, 65));
+        for (int i = 0; i < 6; i++) {
+            JLabel Instruct = new JLabel();
+            if (i == 0)
+                Instruct.setText("Esc:");
+            if (i == 1)
+                Instruct.setText("F5:");
+            if (i == 2)
+                Instruct.setText("Enter:");
+            if (i == 3)
+                Instruct.setText("Exit program");
+            if (i == 4)
+                Instruct.setText("Go to Action Screen");
+            if (i == 5)
+                Instruct.setText("Search DB");
+            Instruct.setHorizontalAlignment(JTextField.CENTER);
+            Instruct.setVerticalAlignment(JTextField.CENTER);
+            Instruct.setFont(new Font("Serif", Font.BOLD, 20));
+            this.bottom.add(Instruct);
         }
 
         //Add Components to JPanel
         this.add(this.top, BorderLayout.PAGE_START);
         this.add(this.table, BorderLayout.CENTER);
-        
+        this.add(this.bottom, BorderLayout.SOUTH);
     }
 
     ActionListener inputAction = new ActionListener(){
@@ -117,12 +163,38 @@ public class PlayerScreen extends JPanel{
                 String result = DB.getCodename(ID);
                 if(result != null){
                     redNameField[index].setText(result);
+                    if (redNameField[index].isEditable()) {
+                        redNameField[index].setBackground(new Color(210, 210, 210));
+                        redNameField[index].setEditable(false);
+                        redNameField[index].setFocusable(false);
+                    }
+                }
+                else {
+                   redNameField[index].setBackground(Color.WHITE);
+                   redNameField[index].setEditable(true);
+                   redNameField[index].setFocusable(true);
+                   if (!redNameField[index].getText().isBlank()) {
+                       redNameField[index].setText(null);
+                   }
                 }
             } else if (identity[0].equals("greenID")){ //Check if greenID box
                 //Query the Database
                 String result = DB.getCodename(ID);
                 if(result != null){
                     greenNameField[index].setText(result);
+                    if (greenNameField[index].isEditable()) {
+                        greenNameField[index].setBackground(new Color(210, 210, 210));
+                        greenNameField[index].setEditable(false);
+                        greenNameField[index].setFocusable(false);
+                    }
+                }
+                else {
+                    greenNameField[index].setBackground(Color.WHITE);
+                    greenNameField[index].setEditable(true);
+                    greenNameField[index].setFocusable(true);
+                    if (!greenNameField[index].getText().isBlank()) {
+                        greenNameField[index].setText(null);
+                    }
                 }
             }
         }

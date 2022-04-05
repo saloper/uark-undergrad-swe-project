@@ -72,11 +72,13 @@ public class View implements KeyEventDispatcher{
     public void showPlayer(){
         root.show(container, "Player");
         this.frame.setVisible(true);
+        this.playerScreen.redIDField[1].requestFocusInWindow();
     }
 
     public void showActionScreen(){
         this.playerScreen.readFields();
         this.actionScreen.onLoad();
+        for(int i=0;i<10;i++) this.actionScreen.sendKillMessage(new Player("person",6,true), new Player("people",7,false));
         root.show(container, "ActionScreen");
         this.frame.setVisible(true);
     }
@@ -93,6 +95,9 @@ public class View implements KeyEventDispatcher{
                 this.gameStarted = true;
                 this.showStartGame();
             }
+        }
+        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            System.exit(0);
         }
         return false;
     }
