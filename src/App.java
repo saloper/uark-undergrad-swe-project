@@ -38,7 +38,6 @@ public class App{
 			ds.receive(DpReceive);
             StringBuilder message = data(receive);
 			System.out.println("Client:-" + message);
-            app.view.actionScreen.killTest.setText(message.toString());
 
 			// Exit the server if the client sends "bye"
 			if (data(receive).toString().equals("bye"))
