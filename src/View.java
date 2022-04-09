@@ -94,15 +94,14 @@ public class View implements KeyEventDispatcher{
     @Override
     public boolean dispatchKeyEvent(KeyEvent e) {
         if(e.getKeyCode() == KeyEvent.VK_F5 && e.getID() == KeyEvent.KEY_PRESSED) {
-            System.out.println("F5 called");
             if (!this.gameStarted) {
                 this.gameStarted = true;
-            }
-            try {
-                this.showStartGame();
-            } catch (IOException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
+                try {
+                    this.showStartGame();
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
             }
         }
 
