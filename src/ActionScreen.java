@@ -2,12 +2,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.io.IOException;
 
 public class ActionScreen extends JPanel {
     Database DB;
     JPanel teamsAndScores;
     JPanel killFeed;
     JPanel countdownTimer;
+    boolean gameStarted = false;
     // teamsAndScores displays the team color along with the top 3 players and their scores for each team.
     // killFeed is the panel which will hold the scrolling text kill feed and will display a message when one player tags another.
 
@@ -23,7 +25,7 @@ public class ActionScreen extends JPanel {
     JTextArea feed;
     // Text box for the scrolling kill feed
 
-    public ActionScreen(Database DB){
+    public ActionScreen(Database DB, UDPListener UDP) throws ClassNotFoundException, IOException {
         this.DB = DB;
         redPlayers = new JLabel[15];
         redPlayerScores = new JLabel[15];
@@ -133,8 +135,9 @@ public class ActionScreen extends JPanel {
     }
     // This method prevents having to copy and paste the same lines over and over for each JLabel text.
 
-    public void sendKillMessage(Player killer, Player killed){
-        feed.insert(killer.getName() + " killed " + killed.getName() + "!\n",0);
+    public void sendKillMessage(Player shootPlayer, Player hitPlayer){
+        if(shootPlayer.id != -1 && hitPlayer.id != -1 && this.gameStarted)
+            feed.insert(shootPlayer.getName() + " shot " + hitPlayer.getName() + "!\n",0);
     }
     // This method prints a kill message using the names of two killed players
 
@@ -157,7 +160,7 @@ public class ActionScreen extends JPanel {
         //Initialize warning timer to 0 minutes, 30 seconds
         int seconds = 30;
         int minutes = 0;
-        boolean gameStarted = false;
+        
         public void run() {
 
             //Reduce "minutes" by 1 if the game has started and there's more than 60 seconds left
@@ -177,6 +180,8 @@ public class ActionScreen extends JPanel {
                 seconds = 0;
                 minutes = 6;
                 gameStarted = true;
+                System.out.println("game now started");
+                
             }
 
             //"%02d" converts (for example) "5" to "05" for formatting purposes
@@ -185,10 +190,12 @@ public class ActionScreen extends JPanel {
             remainingTime2.setText(m + ":" + s);
             if (seconds > 0)
                 seconds--;
+
         }
+      
     }
 
-    public void onLoad(){
+    public void onLoad() throws IOException{
         
         int redIndex = 0;
         int greenIndex = 0;
@@ -208,5 +215,7 @@ public class ActionScreen extends JPanel {
             System.out.println("Getting player from DB: " + player);
             // Printing to show that names are gathered correctly.
         }
+
+        
     }
 }
