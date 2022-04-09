@@ -67,7 +67,7 @@ public class ActionScreen extends JPanel {
             setLabelValues(greenScore, 2);
 
             greenPlayers[i] = greenPlayer;
-            greenPlayerScores[i] = greenPlayer;
+            greenPlayerScores[i] = greenScore;
         }
         // Adding players for each team and their scores.
 
@@ -162,6 +162,10 @@ public class ActionScreen extends JPanel {
         int minutes = 0;
         
         public void run() {
+            if (remainingTime1.getText().equals("Game Over! ") && !View.gameOver) {
+                remainingTime1.setText("Game Begins In: ");
+                gameStarted = false;
+            }
 
             //Reduce "minutes" by 1 if the game has started and there's more than 60 seconds left
             if (seconds == 0 && gameStarted && minutes != 0) {
@@ -173,10 +177,12 @@ public class ActionScreen extends JPanel {
             if (seconds == 0 && gameStarted && minutes == 0) {
                 cancel();
                 View.gameOver = true;
+                gameStarted = false;
+                remainingTime1.setText("Game Over! ");
             }
 
             //If the game has not started and both minutes and seconds are zero, start the game
-            if (seconds == 0 && !gameStarted) {
+            if (seconds == 0 && !gameStarted && !View.gameOver) {
                 remainingTime1.setText("Time Remaining: ");
                 seconds = 0;
                 minutes = 6;
@@ -197,11 +203,10 @@ public class ActionScreen extends JPanel {
     }
 
     public void onLoad() throws IOException{
-        
         int redIndex = 0;
         int greenIndex = 0;
+
         for(int i = 0; i < this.DB.players.size(); i++){
-            
             var player = this.DB.players.get(i);
             if (player.isRedTeam){
                 redPlayers[redIndex].setText(player.getName());
@@ -216,7 +221,15 @@ public class ActionScreen extends JPanel {
             System.out.println("Getting player from DB: " + player);
             // Printing to show that names are gathered correctly.
         }
+    }
 
-        
+
+    public void clearActionUI() {
+            for (int i = 0; i <= 14; i++) {
+                this.greenPlayers[i].setText("--------");
+                this.greenPlayerScores[i].setText("0000");
+                this.redPlayers[i].setText("--------");
+                this.redPlayerScores[i].setText("0000");
+            }
     }
 }

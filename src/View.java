@@ -113,6 +113,7 @@ public class View implements KeyEventDispatcher{
                 this.showPlayer();
                 this.playerScreen.clearFields();
                 this.DB.players.clear();
+                this.actionScreen.clearActionUI();
                 gameOver = false;
                 gameStarted = false;
             }
