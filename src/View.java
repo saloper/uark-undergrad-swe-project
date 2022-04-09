@@ -98,7 +98,14 @@ public class View implements KeyEventDispatcher{
             if (!this.gameStarted) {
                 this.gameStarted = true;
             }
+            try {
+                this.showStartGame();
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
         }
+
         if (e.getKeyCode() == KeyEvent.VK_F1 && e.getID() == KeyEvent.KEY_PRESSED) {
             System.out.println("gameStarted: " + this.gameStarted);
             System.out.println("actionScreen.isVisible(): " + this.actionScreen.isVisible());
