@@ -223,4 +223,13 @@ public class PlayerScreen extends JPanel{
             }
         }
     }
+
+    void clearFields() {
+        for (int i = 1; i <= 15; i++){
+            redIDField[i].setText("");
+            greenIDField[i].setText("");
+            redNameField[i].setText("");
+            greenNameField[i].setText("");
+        }
+    }
 }
