@@ -2,6 +2,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 public class View implements KeyEventDispatcher{
     //Class Variables
@@ -12,12 +13,13 @@ public class View implements KeyEventDispatcher{
     PlayerScreen playerScreen;
     ActionScreen actionScreen;
     Database DB;
+    UDPListener UDP;
     Boolean gameStarted;
     static Boolean gameOver = false;
 
 
     //Constructor
-    public View(Database DB){
+    public View(Database DB) throws ClassNotFoundException, IOException{
         this.DB = DB;
         //Create Card Layouts and Jpanels
         this.frame = new JFrame();
@@ -33,7 +35,7 @@ public class View implements KeyEventDispatcher{
         this.container.setPreferredSize(new Dimension(1280,720));
         splatScreen = new SplatScreen();
         playerScreen = new PlayerScreen(this.DB);
-        actionScreen = new ActionScreen(this.DB);
+        actionScreen = new ActionScreen(this.DB, this.UDP);
 
         this.container.add(splatScreen, "Splat"); //Add a Splat Screen
         this.container.add(playerScreen, "Player"); //Add a player Screen
@@ -76,15 +78,15 @@ public class View implements KeyEventDispatcher{
         this.playerScreen.redIDField[1].requestFocusInWindow();
     }
 
-    public void showActionScreen(){
+    public void showActionScreen() throws IOException{
         this.playerScreen.readFields();
         this.actionScreen.onLoad();
-        for(int i=0;i<10;i++) this.actionScreen.sendKillMessage(new Player("person",6,true), new Player("people",7,false));
+        //for(int i=0;i<10;i++) this.actionScreen.sendKillMessage(new Player("person",6,true), new Player("people",7,false));
         root.show(container, "ActionScreen");
         this.frame.setVisible(true);
     }
 
-    public void showStartGame(){
+    public void showStartGame() throws IOException{
         this.showActionScreen();
         this.actionScreen.setTimer();
     }
@@ -95,8 +97,6 @@ public class View implements KeyEventDispatcher{
             System.out.println("F5 called");
             if (!this.gameStarted) {
                 this.gameStarted = true;
-                this.actionScreen.remainingTime1.setText("Game Begins In: ");
-                this.showStartGame();
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_F1 && e.getID() == KeyEvent.KEY_PRESSED) {
@@ -113,6 +113,9 @@ public class View implements KeyEventDispatcher{
         }
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
             System.exit(0);
+        }
+        if (e.getKeyCode() == KeyEvent.VK_F4) {
+            this.actionScreen.sendKillMessage(this.DB.players.get(0), this.DB.players.get(1));
         }
         return false;
     }

@@ -25,6 +25,18 @@ public class Database {
         players = new ArrayList<Player>();
     }
 
+    // looks through players array list and finds the one with correct id, otherwise return a -1 id'd player
+    public Player getPlayerById(int id) {
+        if (players.size() > 0) {
+            for (int i = 0; i < players.size(); i++) { 		      
+                if(players.get(i).id == id) {
+                    return players.get(i);
+                }
+           }
+        }
+        return new Player("unknown player", -1, false);
+    }
+
     public String getCodename(int id){
         try {
             Statement query = connection.createStatement();
@@ -48,7 +60,7 @@ public class Database {
             add.setString(2, Codename);
             add.executeUpdate();
             add.close();
-            System.out.println("Added Player");
+            System.out.println("Added Player " + Codename);
             return true;
         } catch (SQLException e) {
             System.out.println("Could not add Player");
