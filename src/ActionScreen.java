@@ -84,8 +84,10 @@ public class ActionScreen extends JPanel {
         // These are the total scores for each team which are displayed at the bottom of the grid layout.
 
         killFeed = new JPanel();
-        killFeed.setBackground(Color.BLUE);
-        feed = new JTextArea(15, 115);
+        killFeed.setBackground(Color.BLACK);
+        feed = new JTextArea(15, 120);
+        feed.setBackground(Color.lightGray);
+        feed.setEditable(false);
         killFeed.add(feed);
         // The kill feed will go in its own border layout section and will house the scrolling text which is displayed when players tag one another.
 
@@ -218,7 +220,7 @@ public class ActionScreen extends JPanel {
             }
             // This takes players from the player arraylist from the database and adds them to each team's playerlist.
 
-            System.out.println("Getting player from DB: " + player);
+            // System.out.println("Getting player from DB: " + player);
             // Printing to show that names are gathered correctly.
         }
     }
