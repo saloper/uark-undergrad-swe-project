@@ -33,7 +33,15 @@ public class UDPListener {
             int[] parsed = messageParser(message);
             Player shootPlayer = this.DB.getPlayerById(parsed[0]);
             Player hitPlayer = this.DB.getPlayerById(parsed[1]);
-            this.view.actionScreen.sendKillMessage(shootPlayer, hitPlayer);
+            var as = this.view.actionScreen; // Makes it a little easier to write
+            as.sendKillMessage(shootPlayer, hitPlayer);
+            
+            as.updatePlayerScore(shootPlayer, 10);
+            if (shootPlayer.isRedTeam)
+                as.updateRedTeamScore(as.redTeamScore += 10);
+            else
+                as.updateGreenTeamScore(as.greenTeamScore += 10);
+            // Updates the actual score values and updates the score text in the same line
             
             // Clear the buffer after every message.
             receive = new byte[65535];

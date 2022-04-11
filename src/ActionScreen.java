@@ -13,7 +13,8 @@ public class ActionScreen extends JPanel {
     // teamsAndScores displays the team color along with the top 3 players and their scores for each team.
     // killFeed is the panel which will hold the scrolling text kill feed and will display a message when one player tags another.
 
-    JLabel redTeamScore, greenTeamScore;
+    public int redTeamScore, greenTeamScore;
+    JLabel redTeamScoreText, greenTeamScoreText;
     JLabel remainingTime1, remainingTime2;
 
     JLabel redPlayers[];
@@ -73,14 +74,14 @@ public class ActionScreen extends JPanel {
 
         for (int i = 0; i < 5; i++) { this.teamsAndScores.add(new JLabel()); } // adding a bunch of spaces in a row without copypasting lines.
         this.teamsAndScores.add(new JLabel()); // Space
-        redTeamScore = new JLabel("0000");
-        setLabelValues(redTeamScore, 2);
+        redTeamScoreText = new JLabel("0000");
+        setLabelValues(redTeamScoreText, 2);
 
         this.teamsAndScores.add(new JLabel()); // Space
         this.teamsAndScores.add(new JLabel()); // Space
 
-        greenTeamScore = new JLabel("0000");
-        setLabelValues(greenTeamScore, 2);
+        greenTeamScoreText = new JLabel("0000");
+        setLabelValues(greenTeamScoreText, 2);
         // These are the total scores for each team which are displayed at the bottom of the grid layout.
 
         killFeed = new JPanel();
@@ -144,11 +145,33 @@ public class ActionScreen extends JPanel {
     // This method prints a kill message using the names of two killed players
 
     public void updateRedTeamScore(int score){
-        redTeamScore.setText(Integer.toString(score));
+        redTeamScoreText.setText(Integer.toString(score));
     }
 
     public void updateGreenTeamScore(int score){
-        greenTeamScore.setText(Integer.toString(score));
+        greenTeamScoreText.setText(Integer.toString(score));
+    }
+
+    public void updatePlayerScore(Player player, int score){
+        if (player.isRedTeam){
+            for (int i = 0; i < 15; i++){
+                if (redPlayers[i].getClientProperty("id") != null && (int)redPlayers[i].getClientProperty("id") == player.id){
+                    int newScore = Integer.parseInt(redPlayerScores[i].getText()) + 10;
+                    redPlayerScores[i].setText(String.valueOf(newScore));
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < 15; i++){
+                if (greenPlayers[i].getClientProperty("id") != null && (int)greenPlayers[i].getClientProperty("id") == player.id){
+                    int newScore = Integer.parseInt(greenPlayerScores[i].getText()) + 10;
+                    greenPlayerScores[i].setText(String.valueOf(newScore));
+                }
+            }
+        }
+        // Loops over each player label and checks if that label has an ID (which means a player is there) and checks if that ID is the player we are looking for.
+        // If found, the score for that player is incremented by the method's score parameter.
     }
 
     public void setTimer() {
@@ -212,10 +235,12 @@ public class ActionScreen extends JPanel {
             var player = this.DB.players.get(i);
             if (player.isRedTeam){
                 redPlayers[redIndex].setText(player.getName());
+                redPlayers[redIndex].putClientProperty("id", player.getId());
                 redIndex++;
             }
             else{
                 greenPlayers[greenIndex].setText(player.getName());
+                greenPlayers[greenIndex].putClientProperty("id", player.getId());
                 greenIndex++;
             }
             // This takes players from the player arraylist from the database and adds them to each team's playerlist.
