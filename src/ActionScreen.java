@@ -85,8 +85,8 @@ public class ActionScreen extends JPanel {
         // These are the total scores for each team which are displayed at the bottom of the grid layout.
 
         killFeed = new JPanel();
-        killFeed.setBackground(Color.BLACK);
-        feed = new JTextArea(15, 120);
+        killFeed.setBackground(Color.lightGray);
+        feed = new JTextArea(15, 1);
         feed.setBackground(Color.lightGray);
         feed.setEditable(false);
         killFeed.add(feed);
@@ -145,15 +145,17 @@ public class ActionScreen extends JPanel {
     // This method prints a kill message using the names of two killed players
 
     public void updateRedTeamScore(int score){
-        redTeamScoreText.setText(Integer.toString(score));
+        if (gameStarted)
+            redTeamScoreText.setText(Integer.toString(score));
     }
 
     public void updateGreenTeamScore(int score){
-        greenTeamScoreText.setText(Integer.toString(score));
+        if (gameStarted)
+            greenTeamScoreText.setText(Integer.toString(score));
     }
 
     public void updatePlayerScore(Player player, int score){
-        if (player.isRedTeam){
+        if (player.isRedTeam && gameStarted){
             for (int i = 0; i < 15; i++){
                 if (redPlayers[i].getClientProperty("id") != null && (int)redPlayers[i].getClientProperty("id") == player.id){
                     int newScore = Integer.parseInt(redPlayerScores[i].getText()) + 10;
@@ -161,7 +163,7 @@ public class ActionScreen extends JPanel {
                 }
             }
         }
-        else
+        if (!player.isRedTeam && gameStarted)
         {
             for (int i = 0; i < 15; i++){
                 if (greenPlayers[i].getClientProperty("id") != null && (int)greenPlayers[i].getClientProperty("id") == player.id){
@@ -187,6 +189,24 @@ public class ActionScreen extends JPanel {
         int minutes = 0;
         
         public void run() {
+            // Higher team score flashes
+            if (greenTeamScore > redTeamScore) {
+                greenTeamScoreText.setVisible(false);
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (redTeamScore > greenTeamScore) {
+                redTeamScoreText.setVisible(false);
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
             if (remainingTime1.getText().equals("Game Over! ") && !View.gameOver) {
                 remainingTime1.setText("Game Begins In: ");
                 gameStarted = false;
@@ -220,6 +240,8 @@ public class ActionScreen extends JPanel {
             String s = String.format("%02d", seconds);
             String m = Integer.toString(minutes);
             remainingTime2.setText(m + ":" + s);
+            redTeamScoreText.setVisible(true);
+            greenTeamScoreText.setVisible(true);
             if (seconds > 0)
                 seconds--;
 
@@ -257,6 +279,11 @@ public class ActionScreen extends JPanel {
                 this.greenPlayerScores[i].setText("0000");
                 this.redPlayers[i].setText("--------");
                 this.redPlayerScores[i].setText("0000");
+                this.greenTeamScore = 0;
+                this.redTeamScore = 0;
+                this.greenTeamScoreText.setText("0000");
+                this.redTeamScoreText.setText("0000");
+                this.feed.setText("");
             }
     }
 }

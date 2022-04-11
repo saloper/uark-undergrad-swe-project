@@ -3,7 +3,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
 public class UDPListener {
-    DatagramSocket ds = new DatagramSocket(1234);
+    DatagramSocket ds = new DatagramSocket(7501);
     byte[] receive = new byte[65535];
     DatagramPacket DpReceive = null;
     Database DB;
@@ -37,9 +37,9 @@ public class UDPListener {
             as.sendKillMessage(shootPlayer, hitPlayer);
             
             as.updatePlayerScore(shootPlayer, 10);
-            if (shootPlayer.isRedTeam)
+            if (shootPlayer.isRedTeam && as.gameStarted)
                 as.updateRedTeamScore(as.redTeamScore += 10);
-            else
+            if (!shootPlayer.isRedTeam && as.gameStarted)
                 as.updateGreenTeamScore(as.greenTeamScore += 10);
             // Updates the actual score values and updates the score text in the same line
             
